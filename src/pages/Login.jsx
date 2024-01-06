@@ -7,7 +7,6 @@ import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -15,7 +14,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleSignIn = async () => {
+  const handleLogin = async () => {
     try {
       const { email, password } = formValues;
       await signInWithEmailAndPassword(firebaseAuth, email, password);
@@ -24,14 +23,16 @@ const Login = () => {
     }
   };
 
-  onAuthStateChanged(firebaseAuth, (currentUser) => {});
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (currentUser) navigate("/");
+  });
 
   return (
-    <Container showPassword={showPassword}>
+    <Container>
       <BackgroundImage />
       <div className="content">
         <Header />
-        <div className="form-container flex-column a-center j-center">
+        <div className="form-container flex column a-center j-center">
           <div className="form flex column a-center j-center">
             <div className="title">
               <h3>Login</h3>
@@ -64,7 +65,7 @@ const Login = () => {
                   }
                 />
 
-                <button>Login</button>
+                <button onClick={handleLogin}>Login</button>
               </div>
             </div>
           </div>
@@ -88,49 +89,41 @@ const Container = styled.div`
     display: grid;
     grid-template-rows: 15vh 85vh;
 
-    .body {
-      gap: 1rem;
-      text-align: center;
-      font-size: 2rem;
+    .form-container {
+      gap: 2rem;
+      height: 85vh;
 
-      h1 {
-        padding: 0 25 rem;
-      }
-    }
-    .form {
-      display: grid;
-      grid-template-columns: ${({ showPassword }) =>
-        showPassword ? "1fr 1fr" : "2fr 1fr"};
-      width: 60%;
-      input {
-        color: black;
-        border: none;
-        padding: 1.5rem;
-        font-size: 1.2rem;
-        border: 1px solid black;
-        &:focus {
-          outline: none;
+      .form {
+        padding: 2rem;
+        background-color: #000000ba;
+        width: 25vw;
+        gap: 2rem;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .container {
+          gap: 2rem;
+          input {
+            padding: 0.5rem 1rem;
+            width: 15rem;
+          }
+          button {
+            padding: 0.5rem 1rem;
+            background-color: #e50914;
+            border: none;
+            cursor: pointer;
+            color: white;
+            border-radius: 0.2rem;
+            font-weight: bolder;
+            font-size: 1.05rem;
+            padding: 0.5rem 1rem;
+            width: 15rem;
+          }
         }
       }
-      button {
-        padding: 0.5rem 1rem;
-        background-color: #e50914;
-        border: none;
-        cursor: pointer;
-        color: white;
-        font-weight: bolder;
-        font-size: 1.05rem;
-      }
-    }
-    button {
-      padding: 0.5rem 1rem;
-      background-color: #e50914;
-      border: none;
-      cursor: pointer;
-      color: white;
-      border-radius: 0.2rem;
-      font-weight: bolder;
-      font-size: 1.05rem;
     }
   }
 `;
