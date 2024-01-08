@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react";
-import Card from "./Card";
+import Cards from "./Cards";
 import styled from "styled-components";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
-React.memo(function CardSlider({ data, title }) {
+function CardSlider({ data, title }) {
   const [showControls, setShowControls] = useState(false);
   const [sliderPosition, setSliderPosition] = useState(0);
   const listRef = useRef();
 
-  const handledirection = (direction) => {
+  const handleDirection = (direction) => {
     let distance = listRef.current.getBoundingClientRect().x - 70;
     if (direction === "left" && sliderPosition > 0) {
       listRef.current.style.transform = `translateX(${230 + distance}px)`;
@@ -37,7 +37,7 @@ React.memo(function CardSlider({ data, title }) {
         </div>
         <div className="flex slider" ref={listRef}>
           {data.map((movie, index) => {
-            return <Card movieData={movie} index={index} key={movie.id} />;
+            return <Cards movieData={movie} index={index} key={movie.id} />;
           })}
         </div>
         <div
@@ -50,7 +50,7 @@ React.memo(function CardSlider({ data, title }) {
       </div>
     </Container>
   );
-});
+}
 
 export default CardSlider;
 

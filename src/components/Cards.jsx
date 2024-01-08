@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import video from "../assets/video.mp4";
@@ -8,7 +8,7 @@ import { BsCheck } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 
-React.memo(function Card({ movieData, isLiked = false }) {
+function Cards({ movieData, isLiked = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
@@ -72,8 +72,8 @@ React.memo(function Card({ movieData, isLiked = false }) {
       )}
     </Container>
   );
-});
-export default Card;
+}
+export default Cards;
 
 const Container = styled.div`
   max-width: 230px;

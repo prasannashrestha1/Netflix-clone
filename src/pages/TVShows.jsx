@@ -7,8 +7,9 @@ import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import NotAvailable from "../components/NotAvailable";
 import SelectGenre from "../components/SelectGenre";
+import { useNavigate } from "react-router-dom";
 
-export default function Movies() {
+export default function TVShows() {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ export default function Movies() {
         <Navbar isScrolled={isScrolled} />
       </div>
       <div className="data">
-        <SelectGenre genres={genres} type="movie" />
+        <SelectGenre genres={genres} type="tv" />
         {movies.length ? <Slider movies={movies} /> : <NotAvailable />}
       </div>
     </Container>
